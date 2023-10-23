@@ -172,7 +172,7 @@ def main():
 	y_train = y_norm.head(tr_bat)
 	y_test = y_norm.tail(te_bat)
 
-	model = Perceptron(classes=7)
+	model = Perceptron(p_type = 'classify', classes=1)
 	print("beginning training...")
 	model.Train(x_train, y_train)
 	print("making predictions...")
