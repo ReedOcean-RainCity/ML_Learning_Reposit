@@ -2,15 +2,11 @@
 <html>
 	<head>
 		<h1>Development of Perceptron Algorithms for Binary Classification</h1>
-		<h3>Index</h3>
-		<ul>
-			<li><a href="des-cho">Design Choices</a></li>
-		</ul>
 	</head>
 	<body>
-		<section id = "des-cho">
 		<h2>Design Choices</h2>
-		<p>Coming into this project, I first set out to implement a perceptron algorithm, in accordance to the algorithm found <a href="http://ciml.info/dl/v0_99/ciml-v0_99-ch04.pdf">here.</a></p>
+		<p>Coming into this project, I first set out to implement a perceptron algorithm,
+		in accordance to the algorithm found <a href="http://ciml.info/dl/v0_99/ciml-v0_99-ch04.pdf">here.</a></p>
 		<!--- 			spacer element				--->
 		<img src = "https://github.com/ReedOcean-RainCity/ML_Learning_Reposit/assets/135147457/f0d92e38-0bef-472c-aa30-eae050cee6ca"> 
 		<!--- 			spacer element				--->
@@ -30,7 +26,6 @@
 		into the subject revealed, it would be much easier to repurpose my model to perform classification insstead. To do so, I needed to
 		create a one-hot encoder, to convert my continous variable, into a binary category set that the scikit learn model could handle.</p>
 		<!--- 			spacer element				--->
-		</section>
 		<h2>The Process of Development</h2>
 		<!--- 			spacer element				--->
 		<h3>Stage 1: Starting From Scratch</h3>
@@ -61,7 +56,6 @@
 		handle regression tasks. However, I found that doing so would be excessively difficult and lengthy, if not impossible. So I would instead
 		opt to restructure my perceptron to perform classification.</p>
 		<!--- 			spacer element				--->
-		<section id="re-tool">
 		<h4>Re-Tooling For Classification</h4>
 		<p>First on the list of tasks to make the conversion, was creating an encoder, to change my continuous data into categorical data. For
 		this, I chose to make use of one-hot encoding, since it seemed a simpler algorithm. The first implementation of the encoder didn't have
@@ -71,7 +65,6 @@
 		I realised that the much faster, and simpler solution was to encode the trainging data into categorical data, after the training was 
 		complete. This would allow me to keep most of the code I had previously implemented. Looking back on it now, the encoder more or less
 		acts as a sort of psuedo-activation function.</p>
-		</section>
 		<!--- 			spacer element				--->
 		<h4></h4>
 		<p></p>
