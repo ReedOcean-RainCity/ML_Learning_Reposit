@@ -9,19 +9,60 @@
 		<!--- 			spacer element				--->
 		<img src = "https://github.com/ReedOcean-RainCity/ML_Learning_Reposit/assets/135147457/f0d92e38-0bef-472c-aa30-eae050cee6ca"> 
 		<!--- 			spacer element				--->
-		<p>My approach in completing this task was very head on. The first thing that I did was start by building the class and the initialisation function.
-			I then defined some variables that might be useful, knowing they were subject to change.
-			Then, I started first on the trainging, and then the prediction functions. it initially started looking almost exactly the same as the algorithm in figure 1 depicts and,
-		except for all the specifics of adjusting the data in python, the code is exceptionally faithful to the source material.</p>
+		<p>My approach in completing this task was very head on. The first thing that I did was start by building the class and 
+		the initialisation function.
+		I then defined some variables that might be useful, knowing they were subject to change.
+		Then, I started first on the trainging, and then the prediction functions. it initially started looking almost exactly the same
+		as the algorithm in figure 1 depicts and,except for all the specifics of adjusting the data in python, the code is exceptionally
+		faithful to the source material.</p>
 		<!--- 			spacer element				--->
 		<p>This approach comes mostly from the fact that, although I understand the intuition _behind_ the algorithm, I still need to know the maths
-		behind it in order to program it. And, given that I hadn't much time to implement the algorithms, the approach of understanding the math start to finish,
-		in order to create a more efficient and effective approach, I instead had to rely on the work of someone else.</p>
+		behind it in order to program it. And, given that I hadn't much time to implement the algorithms, the approach of understanding the 
+		math start to finish, in order to create a more efficient and effective approach, I instead had to rely on the work of someone else.</p>
 		<!--- 			spacer element				--->
-		<p>Initially, I had coded my perceptron to solve regression tasks, however, reviewing the objectives of the project, I realissed I would have to repurpose
-		the perceptron class provided by the scsikit learn library to do the same. And some research into the subject revealed, it would be much easier to 
-		repurpose my model to perform classification insstead. To do so, I needed to create a one-hot encoder, to convert my continous variable, into a
-		binary category set that the scikit learn model could handle.</p>
+		<p>Initially, I had coded my perceptron to solve regression tasks, however, reviewing the objectives of the project, 
+		I realissed I would have to repurpose the perceptron class provided by the scsikit learn library to do the same. And some research
+		into the subject revealed, it would be much easier to repurpose my model to perform classification insstead. To do so, I needed to
+		create a one-hot encoder, to convert my continous variable, into a binary category set that the scikit learn model could handle.</p>
+		<!--- 			spacer element				--->
+		<h2>The Process of Development</h2>
+		<!--- 			spacer element				--->
+		<h3>Stage 1: Starting From Scratch</h3>
+		<!--- 			spacer element				--->
+		<p>Development began with the creation of the perceptron class, and initialisation function. The first draft of this function initialised
+		the weights, the bias, and the predictions to be empty, or at 0, for later use. Second, I developed the training and fitting functions.
+		The development of these functions was a fairly straightforward copying the reference algorithms into python, with very little modification.
+		Only, that they had to account for handling a pandas dataframe, and converting into numpy. Then, I created a scoring function. Initially,
+		I just used the metrics from the sklearn library, but would later come back to re-implement it by hand. After that, I needed to work on
+		creating the main function, which would create an insstance of the perceptron and execute the code to test it. In this process, I needed
+		to pull the data from the provided spreadsheet, found <a href="https://datos.gob.mx/busca/dataset/indicadores-de-pobreza-pobreza-por-
+		ingresos-rezago-social-y-gini-a-nivel-municipal1990-200-2010">here.</a></p>
+		<!--- 			spacer element				--->
+		<p>I then implemented a function that takes advantage of the pandas library to cull a given dataframe of any non-numeric data, as any
+		categorical data could not be read without being encoded first (at this stage I hadn't programmed an encoder).</p>
+		<p> At this phase of development I simply used 7 features, of which I do not recall what they were, and when the whole script was debugged,
+		I get a Mean Squared Error (MSE) that was several powers of ten large. This tipped me off that, perhaps the amount of features, or the
+		features themselves, were insufficient, and I had to change my approach. So instead, I took every numeric feature, except for the poverty
+		as a percentage -for the reason that it is exactly the same thing- as features of my model. I believe this managed to net me an MSE that
+		was much smaller than before.</p>
+		<!--- 			spacer element				--->
+		<h3>Stage 2: Preparing for Comparisons</h3>
+		<!--- 			spacer element				--->
+		<h4>The Beginnings of the Scikit Learn Model</h4>
+		<p>After I re-read the instructions for the project, I realised that I would have to create a seperate script that made use of libraries
+		with pre-existing solutions for the perceptron. The start of this program was much faster, since I could re-use a large chunk of code from
+		the perceptron from scratch code. Since this script would be for comparison, I also looked into how to retool the scikit learn model to
+		handle regression tasks. However, I found that doing so would be excessively difficult and lengthy, if not impossible. So I would instead
+		opt to restructure my perceptron to perform classification.</p>
+		<!--- 			spacer element				--->
+		<h4>Re-Tooling For Classification</h4>
+		<p>First on the list of tasks to make the conversion, was creating an encoder, to change my continuous data into categorical data. For
+		this, I chose to make use of one-hot encoding, since it seemed a simpler algorithm. The first implementation of the encoder didn't have
+		special cases for binary or two-class classifications, which the more general portion of my algorithm doesn't handle quite right.</p>
+		<p>At first, I attempted to encode the data first, and realised that I would need to retool a more major portion of the algortihm. Then,
+		I realised that the much faster, and simpler solution was to encode the trainging data into categorical data, after the training was 
+		complete. This would allow me to keep most of the code I had previously implemented. Looking back on it now, the encoder more or less
+		acts as a sort of psuedo-activation function</p>
 		<!--- 			spacer element				--->
 		<h2>Preparing the Data</h2>
 		<!--- 			spacer element				--->
@@ -70,6 +111,7 @@
 		<!--- 			spacer element				--->
 		<p>There are many tasks in the world of robotics where machine leanring is useful and can be applied. In this case, an algorithm like mine,
 		with a major boost to its compute time, can be helpul when we need a robot to be able to make use of a maleable algorithm that can apply
-		for different tasks, but we don't need the algorith to be too complex or precise. </p>
+		for different tasks, but we don't need the algorith to be too complex or precise. Supervised learning in particular, can be used when we 
+		want robots to be able to identify specific, known, objects, when we want our robot to be able to predict</p>
 	</body>
 </html>
