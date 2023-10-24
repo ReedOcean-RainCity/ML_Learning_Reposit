@@ -2,13 +2,37 @@
 <html>
 	<head>
 		<h1>Development of Perceptron Algorithms for Binary Classification</h1>
+		<h2>Index</h2>
+		<ul>
+			<li><a href="#index">Index</a></li>
+			<li><a href="#design-choices">Dessign Choices</a></li>
+			<li><a href="#the-process-of-development">Development Processs</a></li>
+			<ul>
+				<li><a href="#stage-1-starting-from-scratch">stage 1</a></li>
+				<li><a href="#stage-2-preparing-for-comparisons">stage 2</a></li>
+				<ul>
+					<li><a href="#the-beginnings-of-the-scikit-learn-model">sklearn model starts</a></li>
+					<li><a href="#re-tooling-for-classification">retool for classification</a></li>
+					<li><a href="#prepping-data-for-scikit-learn-perceptron">data prep for sklearn</a></li>
+				</ul>
+				<li><a href="#stage-3-finishing-touches">Finishing Touches</a></li>
+			</ul>
+			<li><a href="#preparing-the-data">Prepping the Data</a></li>
+			<li><a href="#results-of-the-programs">Results</a></li>
+			<li><a href="#reflecting-on-the-project">Conclusions</a></li>
+			<ul>
+				<li><a href="#an-unexpected-challenge-and-solution">Challenges</a></li>
+				<li><a href="#applications-vs-theory">Applications</a></li>
+			</ul>
+		</ul>
 	</head>
 	<body>
 		<h2>Design Choices</h2>
 		<p>Coming into this project, I first set out to implement a perceptron algorithm,
 		in accordance to the algorithm found <a href="http://ciml.info/dl/v0_99/ciml-v0_99-ch04.pdf">here.</a></p>
 		<!--- 			spacer element				--->
-		<img src = "https://github.com/ReedOcean-RainCity/ML_Learning_Reposit/assets/135147457/f0d92e38-0bef-472c-aa30-eae050cee6ca"> 
+		<img src = "https://github.com/ReedOcean-RainCity/ML_Learning_Reposit/assets/135147457/f0d92e38-0bef-472c-aa30-eae050cee6ca">
+		<p><i>Fig. 1.	Perceptron algorithm</i></p>
 		<!--- 			spacer element				--->
 		<p>My approach in completing this task was very head on. The first thing that I did was start by building the class and 
 		the initialisation function.
@@ -66,8 +90,40 @@
 		complete. This would allow me to keep most of the code I had previously implemented. Looking back on it now, the encoder more or less
 		acts as a sort of psuedo-activation function.</p>
 		<!--- 			spacer element				--->
-		<h4></h4>
-		<p></p>
+		<p>I also needed to change the scoring metric to accuracy, rather than continuing to use the MSE. To accomplish this, I took the MSE 
+		algorithm, and made a new private function for it in the perceptron class. Then, I added a new private class for the accuracy algorithm,
+		and changed the evaluation function to accept an argument to select which metric to use, and had the function simply use a match case 
+		statement to select between the two functions.</p>
+		<!--- 			spacer element				--->
+		<p>At some point during this process, I realised that the predictions of my model seemed to have the predictions in the opposite order
+		of the actual label values. In order to remedy this, I added the option to reverse the order of the values in the encoder, tied to the
+		boolean argument "flip."</p>
+		<!--- 			spacer element				--->
+		<h4>Prepping Data for SciKit Learn Perceptron</h4>
+		<p>This part took me the most time to figure out. Initially, I sismply made the same changes I'd made to my own perceptron model's data.
+		However, I discsovered that the perceptron model from scikit learn wass very particular about the shape of the data, so I had to readjust
+		the shape of my encoded labels array to match with the format of the model. This was easily achieved by adding a couple extra lines of
+		code that always force the shape to be vertically one-dimensional.</p>
+		<!--- 			spacer element				--->
+		<p>The tricky part didn't come until after, where I wass getting an error message about the data I was entering not being the right type.
+		I looked through the API reference for sklearn's perceptron but found no clues, and the error itself didn't sseem to provide much detail.
+		I only knew that the data entering into the fitting function of the model would not accept my data. Finally, I was forced to ressort to the 
+		aid of chatGPT. I provided chatGPT with my code, and the error mesage I was recieving to help me interpret the problem. As it happens, the
+		scikit learn model only accepts binary data, as it exclussively performs binary classification. After some modification to make the data 
+		properly match what the function required (aided by chatGPT's description of the issue, and some minor code suggestions)</p>
+		<img src="https://github.com/ReedOcean-RainCity/ML_Learning_Reposit/assets/135147457/4abe46a8-fbd2-4052-acc0-9b6dbf6e18be">
+		<p><i>Fig. 2.	Code suggested by chatGPT (i.e. add .values.ravel() to labels data)</i></p>
+		<!--- 			spacer element				--->
+		<p>The one-hot encoder that I coded also needed to be adjusted so that it could properly handle cases where less than 3 categories were
+		needed to be encoded. This was achieved by creating a special case for when the number of categories is 1, and for when it's 2. I also added
+		a condition to protect against negative numbers of categories.</p>
+		<!--- 			spacer element				--->
+		<h3>Stage 3: Finishing Touches</h3>
+		<!--- 			spacer element				--->
+		<p>Finally, once everything was functional, I added some small, finishing touches. The first of these touchess, was to bring the newer
+		implementation of the OHE into the model that I programmed from scratch. Then, noticing that other people's codes had class functions return
+		the instance, I looked into why, and foun that this is done so that one can more easily chain together the functions. So, I changed the
+		functions on my Perceptron class to return the instance whenever it was applicable, and adjussted the code where neccesary.</p>
 		<!--- 			spacer element				--->
 		<h2>Preparing the Data</h2>
 		<!--- 			spacer element				--->
@@ -75,8 +131,10 @@
 		I needed to download the dictionary that describes what each piece of data represents. Then, I would mark out what features seemed like
 		they might be helpful, and later mark out which ones I would actually use, to make it easier when programming.</p>
 		<img src="https://github.com/ReedOcean-RainCity/ML_Learning_Reposit/assets/135147457/4d20e46c-5cea-4a2e-95ac-a79829f6c9b2">
+		<p><i>Fig. 3. Legend for dataset selections</i></p>
 		<!--- 			spacer element				--->
 		<img src="https://github.com/ReedOcean-RainCity/ML_Learning_Reposit/assets/135147457/bb2d7855-5a69-421d-bab7-2f199150f856">
+		<p><i>Fig. 4.	Selected labels</i></p>
 		<!--- 			spacer element				--->
 		<p>These features were selected because they all relate to the quality of life of the households, as a number, and did not directly
 		include the answer within them. To use this data in my, or indeed any, algorithm, I needed to ensure that only numerical values remained
@@ -93,12 +151,14 @@
 		same data 2 or 3 times, and earn a higher accuracy.</p>
 		<!--- 			spacer element				--->
 		<img src="https://github.com/ReedOcean-RainCity/ML_Learning_Reposit/assets/135147457/d76b25b1-feff-4122-b1d3-84db24b9ac22">
+		<p><i>Fig. 5.	Results of algorithms: (top) results of sklearn model, (bottom) results of my algorithm doing multiclass classifiation</i></p>
 		<!--- 			spacer element				--->
 		<p>Changing the ssettings of my model to match the requirements of scikit learn's model, binary classification, causes my algorithm's
 		performance to absolutely tank. So while my algorithm is defenitely worse at binary classification than scikit learn's algorithm,
 		it is more maleable and can be used to solve more problems.</p>
 		<!--- 			spacer element				--->
 		<img src="https://github.com/ReedOcean-RainCity/ML_Learning_Reposit/assets/135147457/52f3a574-fc77-47a7-8b0b-dc91a206cf50">
+		<p><i>Fig. 6.	Results of my algorithm performing a binary classification</i></p>
 		<!--- 			spacer element				--->
 		<h2>Reflecting on the Project</h2>
 		<!--- 			spacer element				--->
